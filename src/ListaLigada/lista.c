@@ -32,7 +32,9 @@ void *recorreFn(Lista *lista, void(*function)())
     }
 
     lista->size = id;
-    out->ultimo = 1;
+
+    if(out)
+        out->ultimo = 1;
 
     return out;
 }
@@ -78,11 +80,14 @@ void addRaiz(Lista *lista, void *dato)
 // lista
 void removeRaiz(Lista *lista)
 {
-    Nodo *aux = lista->raiz;
+    if(lista->raiz)
+    {
+        Nodo *aux = lista->raiz;
 
-    lista->raiz = lista->raiz->sig;
-    aux = destroyNodo(aux);
-    lista->ultimo = recorre(lista);
+        lista->raiz = lista->raiz->sig;
+        aux = destroyNodo(aux);
+        lista->ultimo = recorre(lista);
+    }
 }
 
 // ===================== Último ========================
@@ -108,5 +113,21 @@ void removeUltimo_p(Nodo *nodo)
 // lista
 void removeUltimo(Lista *lista)
 {
-    lista->ultimo = recorreFn(lista, removeUltimo_p);
+    if(lista->raiz)
+    {
+        if(lista->raiz->ultimo)
+            removeRaiz(lista);
+        else
+            lista->ultimo = recorreFn(lista, removeUltimo_p);
+    }
+}
+
+// ===================== NUKEEE THA LIIIST!!!! ========================
+
+// PELIGRO!!!!
+// Esto borra TODA la lista
+void nukeLista(Lista *lista)
+{
+    while(lista->raiz)
+        removeRaiz(lista);
 }

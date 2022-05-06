@@ -20,8 +20,7 @@ int main()
 
     listaInit(&clientes);
     addRaiz(&clientes, nuevoChar("Juan premium"));
-    addRaiz(&clientes, nuevoChar("Panchito"));
-    addUltimo(&clientes, nuevoChar("Juana"));
+    removeUltimo(&clientes);
     removeRaiz(&clientes);
     removeUltimo(&clientes);
     recorreFn(&clientes, print);
