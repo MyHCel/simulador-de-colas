@@ -96,9 +96,15 @@ void removeRaiz(Lista *lista)
 // lista
 void addUltimo(Lista *lista, void *dato)
 {
-    lista->ultimo->sig = newNodo();
-    setNodo(lista->ultimo->sig, dato);
-    lista->ultimo = recorre(lista);
+    if(lista->ultimo)
+    {
+        lista->ultimo->sig = newNodo();
+        setNodo(lista->ultimo->sig, dato);
+        lista->ultimo = recorre(lista);
+    }
+
+    else
+        addRaiz(lista, dato);
 }
 
 // Borra el nodo del final de la
