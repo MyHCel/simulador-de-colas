@@ -128,7 +128,7 @@ void removeUltimo(Lista *lista)
     }
 }
 
-// ===================== NUKEEE THA LIIIST!!!! ========================
+// ===================== NUKEEE DA LIIIST!!!! ========================
 
 // PELIGRO!!!!
 // Esto borra TODA la lista
