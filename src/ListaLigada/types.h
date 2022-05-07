@@ -1,11 +1,16 @@
 #ifndef _NODO_TYPES_H__
 #define _NODO_TYPES_H__
 
+#define TRUE    1
+#define FALSE   0
+
+typedef unsigned char bool;
+
 typedef struct Nodo
 {
     void *dato;
     int id;
-    int ultimo;
+    bool ultimo;
     struct Nodo *sig;
 } Nodo;
 

@@ -25,7 +25,7 @@ void *recorreFn(Lista *lista, void(*function)())
     {
         function(aux);
         aux->id = id;
-        aux->ultimo = 0;
+        aux->ultimo = FALSE;
         out = aux;
         aux = aux->sig;
         id++;
@@ -34,7 +34,7 @@ void *recorreFn(Lista *lista, void(*function)())
     lista->size = id;
 
     if(out)
-        out->ultimo = 1;
+        out->ultimo = TRUE;
 
     return out;
 }

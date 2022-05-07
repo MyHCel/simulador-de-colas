@@ -19,6 +19,8 @@ void print(Nodo *nodo)
 int main()
 {
     Lista clientes;
+    bool yaAcabamos = FALSE;
+    bool tengoSueño = TRUE;
 
     listaInit(&clientes);
     addUltimo(&clientes, newString("Juan Premium"));
