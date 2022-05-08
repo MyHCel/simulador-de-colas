@@ -8,6 +8,7 @@ add_executable(main main.c)
 
 # Librerias
 add_subdirectory(ListaLigada)
-target_link_libraries(main PUBLIC ListaLigada)
+add_subdirectory(Clientes)
+target_link_libraries(main PUBLIC ListaLigada Clientes)
 target_include_directories(main PUBLIC
                            "${PROJECT_BINARY_DIR}")

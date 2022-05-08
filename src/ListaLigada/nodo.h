@@ -12,6 +12,9 @@ Nodo *newNodo();
 void setNodo(Nodo *nodo, void *dato);
 
 // Destruir un nodo
-Nodo *destroyNodo(Nodo *nodo);
+// Regresa el dato
+void *destroyNodo(Nodo *nodo, bool delDato);
+
+void printNodo(Nodo *nodo, void(*printDato)());
 
 #endif // _NODO_H__

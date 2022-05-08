@@ -1,44 +1,118 @@
 #include<stdio.h>
 #include<string.h>
+#include<unistd.h>
 #include<ListaLigada.h>
+#include<Clientes.h>
 
-// Constructor de prueba
-char *newString(char *string)
-{
-    char *ggg = NULL;
-    ggg = (char*)calloc(strlen(string), sizeof(char));
-    memcpy(ggg, string, strlen(string));
-}
-
-// Función de prueba
-void print(Nodo *nodo)
-{
-    printf("[%s]\n", nodo->dato);
-}
+#define CAJEROS 8
 
 int main()
 {
-    Lista clientes;
-    bool yaAcabamos = FALSE;
-    bool tengoSueño = TRUE;
+    Lista fila, formados;
+    Cajero cajero[CAJEROS];
+    int razonAtencion = 1800;
+    int razonLlegada = 160;
+    int atendidos = 0;
+    int rezagados = 0;
+    int *sumatoria = NULL;
+    double promedio = 0.0;
 
-    listaInit(&clientes);
-    addUltimo(&clientes, newString("Juan Premium"));
-    addUltimo(&clientes, newString("Juan"));
-    addUltimo(&clientes, newString("Pancha"));
-    addUltimo(&clientes, newString("Alan Brito Delgado"));
-    addUltimo(&clientes, newString("Elba Surita"));
-    addUltimo(&clientes, newString("io merengues"));
-    
-    recorreFn(&clientes, print);
-    puts(" ");
+    randomInit();
+    listaInit(&fila);
+    listaInit(&formados);
 
-    removeRaiz(&clientes);
-    removeRaiz(&clientes);
-    removeRaiz(&clientes);
+    for(int n = 0; n < CAJEROS; n++)
+        setCajero(&cajero[n], razonAtencion, n);
 
-    recorreFn(&clientes, print);
-    nukeLista(&clientes);
+    // ================================================
+
+    int tiempo = 0;
+    int llegada = 0;
+
+    while(tiempo < 32400)
+    {
+        // ============== Agrega clientes ==============
+
+        if(!llegada)
+        {
+            Cliente *nuevo = newCliente();
+
+            if(!fila.raiz)
+            {
+                int n = 0;
+
+                for(n = 0; n < CAJEROS; n++)
+                {
+                    if(!cajero[n].ocupado)
+                    {
+                        ocuparCajero(&cajero[n], nuevo, razonAtencion);
+                        break;
+                    }
+                }
+
+                if(n == CAJEROS)
+                {
+                    nuevo->espero = TRUE;
+                    addUltimo(&fila, nuevo);
+                }
+            }
+
+            else
+            {
+                nuevo->espero = TRUE;
+                addUltimo(&fila, nuevo);
+            }
+
+            llegada = randomNumber(3, razonLlegada);
+        }
+
+        // =============== Actualizar cajeros y filas ======================
+
+        for(int n = 0; n < CAJEROS; n++)
+        {
+            if(fila.raiz)
+            {
+                if(!cajero[n].ocupado)
+                    ocuparCajero(&cajero[n], removeRaiz(&fila, FALSE), razonAtencion);
+            }
+
+            if(!cajero[n].tiempoA && cajero[n].ocupado)
+            {
+                Cliente *aux = desocuparCajero(&cajero[n]);
+                atendidos++;
+
+                if(aux->espero)
+                    addRaiz(&formados, aux);
+
+                else
+                    free(aux);
+            }
+        }
+
+        // ============== Acualiza tiempo ==============
+
+        recorreFn(&fila, esperar);
+
+        for(int n = 0; n < CAJEROS; n++)
+        {
+            if(cajero[n].ocupado && cajero[n].tiempoA)
+                cajero[n].tiempoA--;
+        }
+
+        if(llegada)
+            llegada--;
+
+        tiempo++;
+    }
+
+    rezagados = fila.size;
+
+    while(fila.raiz)
+        addRaiz(&formados, removeRaiz(&fila, FALSE));
+
+    addUltimo(&formados, getInt());
+    recorreFn(&formados, getSumatoria);
+    promedio = *sumatoria / (double)formados.size;
 
 return 0;
 }

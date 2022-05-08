@@ -78,15 +78,18 @@ void addRaiz(Lista *lista, void *dato)
 
 // Borrar el nodo del inicio de la
 // lista
-void removeRaiz(Lista *lista)
+// Regresa el dato
+void *removeRaiz(Lista *lista, bool delDato)
 {
     if(lista->raiz)
     {
-        Nodo *aux = lista->raiz;
+        void *aux = lista->raiz;
 
         lista->raiz = lista->raiz->sig;
-        aux = destroyNodo(aux);
+        aux = destroyNodo(aux, delDato);
         lista->ultimo = recorre(lista);
+
+        return aux;
     }
 }
 
@@ -107,24 +110,53 @@ void addUltimo(Lista *lista, void *dato)
         addRaiz(lista, dato);
 }
 
-// Borra el nodo del final de la
+// Remueve el nodo del final de la
 // lista
 void removeUltimo_p(Nodo *nodo)
 {
     if(nodo->sig->ultimo)
-        nodo->sig = destroyNodo(nodo->sig);
+    {
+        destroyNodo(nodo->sig, FALSE);
+        nodo->sig = NULL;
+    }
 }
 
-// Borra el nodo del final de la
-// lista
-void removeUltimo(Lista *lista)
+// Remueve el nodo del final de la
+// lista y borra el dato
+void removeUltimo_p_d(Nodo *nodo)
+{
+    if(nodo->sig->ultimo)
+    {
+        nodo->sig = destroyNodo(nodo->sig, TRUE); 
+    }
+}
+
+// Remueve el nodo del final de la
+// lista y regresa el dato
+void *removeUltimo(Lista *lista, bool delDato)
 {
     if(lista->raiz)
     {
+        void *aux = lista->ultimo;
+
         if(lista->raiz->ultimo)
-            removeRaiz(lista);
+        {
+            aux = removeRaiz(lista, delDato);
+            return aux;
+        }
+
+        else if(delDato)
+        {
+            lista->ultimo = recorreFn(lista, removeUltimo_p_d);
+            return NULL;
+        }
+
         else
+        {
+            aux = lista->ultimo->dato;
             lista->ultimo = recorreFn(lista, removeUltimo_p);
+            return aux;
+        }
     }
 }
 
@@ -135,5 +167,5 @@ void removeUltimo(Lista *lista)
 void nukeLista(Lista *lista)
 {
     while(lista->raiz)
-        removeRaiz(lista);
+        removeRaiz(lista, TRUE);
 }

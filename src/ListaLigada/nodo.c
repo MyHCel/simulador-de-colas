@@ -25,15 +25,27 @@ Nodo *newNodo()
 }
 
 // Destruir un nodo
-Nodo *destroyNodo(Nodo *nodo)
+// Regresa el dato
+void *destroyNodo(Nodo *nodo, bool delDato)
 {
+    void *out = nodo->dato;
+
     nodo->sig = NULL;
-    free(nodo->dato);
     nodo->dato = NULL;
+
     free(nodo);
     nodo = NULL;
 
-    return nodo;
+    if(delDato)
+    {
+        free(out);
+        return nodo;
+    }
+
+    else
+    {
+        return out;
+    }
 }
 
 // Asignarle algún valor al dato del nodo
@@ -41,4 +53,13 @@ Nodo *destroyNodo(Nodo *nodo)
 void setNodo(Nodo *nodo, void *dato)
 {
     nodo->dato = dato;
+}
+
+void printNodo(Nodo *nodo, void(*printDato)())
+{
+    if(nodo)
+    {
+        printf("ID: %d\n", nodo->id);
+        printDato(nodo->dato);
+    }
 }

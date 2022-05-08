@@ -16,15 +16,16 @@ void addRaiz(Lista *lista, void *dato);
 
 // Borrar el nodo del inicio de la
 // lista
-void removeRaiz(Lista *lista);
+// Regresa el dato
+void *removeRaiz(Lista *lista, bool delDato);
 
 // Agrega un nodo al final de la
 // lista
 void addUltimo(Lista *lista, void *dato);
 
-// Borra el nodo del final de la
-// lista
-void removeUltimo(Lista *lista);
+// Remueve el nodo del final de la
+// lista y regresa el dato
+void *removeUltimo(Lista *lista, bool delDato);
 
 // PELIGRO!!!!
 // Esto borra TODA la lista
