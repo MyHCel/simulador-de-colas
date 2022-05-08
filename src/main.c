@@ -112,6 +112,7 @@ int main()
 
     addUltimo(&formados, getInt());
     recorreFn(&formados, getSumatoria);
+    sumatoria = formados.ultimo->dato;
     promedio = *sumatoria / (double)formados.size;
 
 return 0;
