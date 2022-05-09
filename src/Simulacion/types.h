@@ -13,7 +13,7 @@ typedef struct
     int rezagados;
     int sumatoria;
     int vecesVacia;
-    double promedio;
+    int promedio;
 } Simulacion;
 
 #endif // _SIMULACION_TYPES_H__

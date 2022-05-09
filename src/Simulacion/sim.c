@@ -95,7 +95,7 @@ void startSimulacion(Simulacion *sim)
                 addUltimo(&fila, nuevo);
             }
 
-            llegada = randomNumber(3, razonLlegada);
+            llegada = randomNumber(1, razonLlegada);
         }
 
         // =============== Actualizar cajeros y filas ======================
@@ -108,7 +108,7 @@ void startSimulacion(Simulacion *sim)
                     ocuparCajero(&cajero[n], removeRaiz(&fila, FALSE));
             }
 
-            if(!cajero[n].tiempoA && cajero[n].ocupado)
+            if((cajero[n].tiempoA == 1) && cajero[n].ocupado)
             {
                 Cliente *aux = desocuparCajero(&cajero[n]);
                 atendidos++;
@@ -136,7 +136,8 @@ void startSimulacion(Simulacion *sim)
 
         for(int n = 0; n < CAJEROS; n++)
         {
-            if(cajero[n].ocupado && cajero[n].tiempoA)
+            //if(cajero[n].ocupado && cajero[n].tiempoA)
+            if(cajero[n].tiempoA)
                 cajero[n].tiempoA--;
         }
 
@@ -161,7 +162,7 @@ void startSimulacion(Simulacion *sim)
     sim->vecesVacia = vecesVacia;
 
     // Promedio
-    sim->promedio = sim->sumatoria / (double)formados.size;
+    sim->promedio = sim->sumatoria / formados.size;
 
     nukeLista(&fila);
     nukeLista(&formados);
@@ -176,7 +177,7 @@ void printSimulacion(Simulacion sim)
 
     printf("Se atendieron %d clientes\n", sim.atendidos);
     printf("Quedaron %d clientes en cola de espra\n", sim.rezagados);
-    printf("El cliente permanece en promedio %.2lf segundos en la cola\n", sim.promedio);
+    printf("El cliente permanece en promedio %d segundos en la cola\n", sim.promedio);
 
     printf("La cola estuvo vacía %d veces\n\n", sim.vecesVacia);
 }

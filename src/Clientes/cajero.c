@@ -20,7 +20,7 @@ void ocuparCajero(Cajero *cajero, Cliente *cliente)
 {
     cajero->cliente = cliente;
     cajero->ocupado = TRUE;
-    cajero->tiempoA = randomNumber(5, cajero->rAtencion);
+    cajero->tiempoA = randomNumber(1, cajero->rAtencion);
 }
 
 // Desocupar un cajero
@@ -30,7 +30,7 @@ void *desocuparCajero(Cajero *cajero)
 
     cajero->cliente = NULL;
     cajero->ocupado = FALSE;
-    cajero->tiempoA = 0;
+    //cajero->tiempoA = 0;
 
     return out;
 }
