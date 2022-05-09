@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include"types.h"
 
+// Crear un cliente
 Cliente *newCliente()
 {
     Cliente *out = NULL;
@@ -13,14 +14,9 @@ Cliente *newCliente()
     return out;
 }
 
+// Hacer que un cliente espere
 void esperar(Nodo *nodo)
 {
     Cliente *aux = nodo->dato;
     aux->tiempoE++;
-}
-
-void printCliente(Cliente *cliente)
-{
-    //printf("Tiempo atención: %d\n", cliente->tiempoA);
-    printf("Tiempo esperando: %d\n", cliente->tiempoE);
 }

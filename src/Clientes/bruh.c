@@ -3,17 +3,20 @@
 #include<ListaLigada.h>
 #include"types.h"
 
+// Inicializar el randomizador
 void randomInit()
 {
     srand(time(NULL));
 }
 
+// Obtener un número aleatorio
 int randomNumber(int lower, int upper)
 {
     int out = (rand() % (upper - lower + 1)) + lower;
     return out;
 }
 
+// Obtener un apuntador a un int
 int *getInt()
 {
     int *out = NULL;
@@ -24,6 +27,8 @@ int *getInt()
     return out;
 }
 
+// Obtener la sumatoria de todos los
+// clientes
 void getSumatoria(Nodo *nodo)
 {
     static int out;

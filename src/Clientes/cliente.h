@@ -3,9 +3,10 @@
 
 #include"types.h"
 
+// Crear un cliente
 Cliente *newCliente();
-void esperar(Nodo *nodo);
-void printCliente(Cliente *cliente);
 
+// Hacer que un cliente espere
+void esperar(Nodo *nodo);
 
 #endif // _CLIENTE_H__

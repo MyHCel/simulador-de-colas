@@ -3,9 +3,13 @@
 
 #include"types.h"
 
-void setCajero(Cajero *cajero, int razonAtencion, int id);
-Cajero *newCajero(int id);
-void ocuparCajero(Cajero *cajero, Cliente *cliente, int razonAtencion);
+// Configurar un cajero
+void setCajero(Cajero *cajero, int id);
+
+// Ocupar un cajero
+void ocuparCajero(Cajero *cajero, Cliente *cliente);
+
+// Desocupar un cajero
 void *desocuparCajero(Cajero *cajero);
 
 #endif // _CAJERO_H__

@@ -3,32 +3,27 @@
 #include"types.h"
 #include"bruh.h"
 
-void setCajero(Cajero *cajero, int razonAtencion, int id)
+// Configurar un cajero
+void setCajero(Cajero *cajero, int id)
 {
     cajero->id = id;
     cajero->tiempoA = 0;
-    cajero->rAtencion = razonAtencion;
     cajero->ocupado = FALSE;
     cajero->cliente = NULL;
+
+    printf("Razón de atención del cajero %d: ", cajero->id + 1);
+    scanf("%d", &cajero->rAtencion);
 }
 
-Cajero *newCajero(int razonAtencion, int id)
-{
-    Cajero *out = NULL;
-
-    out = (Cajero*)calloc(1, sizeof(Cajero));
-    setCajero(out, razonAtencion, id);
-
-    return out;
-}
-
-void ocuparCajero(Cajero *cajero, Cliente *cliente, int razonAtencion)
+// Ocupar un cajero
+void ocuparCajero(Cajero *cajero, Cliente *cliente)
 {
     cajero->cliente = cliente;
     cajero->ocupado = TRUE;
-    cajero->tiempoA = randomNumber(5, razonAtencion);
+    cajero->tiempoA = randomNumber(5, cajero->rAtencion);
 }
 
+// Desocupar un cajero
 void *desocuparCajero(Cajero *cajero)
 {
     Cliente *out = cajero->cliente;

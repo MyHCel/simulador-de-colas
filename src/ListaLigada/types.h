@@ -1,5 +1,5 @@
-#ifndef _NODO_TYPES_H__
-#define _NODO_TYPES_H__
+#ifndef _LISTALIGADA_TYPES_H__
+#define _LISTALIGADA_TYPES_H__
 
 #define TRUE    1
 #define FALSE   0
@@ -21,4 +21,4 @@ typedef struct
     size_t size;
 } Lista;
 
-#endif // _NODO_TYPES__
+#endif // _LISTALIGADA_TYPES__

@@ -54,12 +54,3 @@ void setNodo(Nodo *nodo, void *dato)
 {
     nodo->dato = dato;
 }
-
-void printNodo(Nodo *nodo, void(*printDato)())
-{
-    if(nodo)
-    {
-        printf("ID: %d\n", nodo->id);
-        printDato(nodo->dato);
-    }
-}
