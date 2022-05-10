@@ -5,6 +5,7 @@ project(main)
 
 # Ejecutable
 add_executable(main main.c)
+set(CMAKE_C_FLAGS "-Wall")
 
 # Librerias
 add_subdirectory(ListaLigada)

@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include"types.h"
+#include"misc.h"
 
 // Configurar una simulación
 void setSimulacion(Simulacion *sim)
@@ -9,7 +10,7 @@ void setSimulacion(Simulacion *sim)
     sim->sumatoria = 0;
     sim->promedio = 0.0;
 
-    printf("Razón de llegada promedio: ");
+    printf("Razón de llegadas promedio: ");
     scanf("%d", &sim->razonLlegada);
 
     printf("Número de cajeros: ");
@@ -18,9 +19,7 @@ void setSimulacion(Simulacion *sim)
     sim->cajero = (Cajero*)calloc(sim->ncajeros, sizeof(Cajero));
 
     for(int n = 0; n < sim->ncajeros; n++)
-    {
         setCajero(&sim->cajero[n], n);
-    }
 }
 
 // Crear una simulación
@@ -29,7 +28,6 @@ Simulacion *newSimulacion()
     Simulacion *out = NULL;
 
     out = (Simulacion*)calloc(1, sizeof(Simulacion));
-
     setSimulacion(out);
 
     return out;
@@ -39,10 +37,11 @@ Simulacion *newSimulacion()
 void startSimulacion(Simulacion *sim)
 {
     // Simulación
-    Lista fila, formados;
+    Lista fila, formados/*, llegada*/;
+    int llegada[32400];
+    int llegadas = 0;
     int *sumatoria = NULL;
     int tiempo = 0;
-    int llegada = 0;
     bool vacia = TRUE;
 
     // Entrada
@@ -59,13 +58,18 @@ void startSimulacion(Simulacion *sim)
     listaInit(&fila);
     listaInit(&formados);
 
+    for(int n = 0; n < 32400; n++)
+        llegada[n] = -1;
+
     // ================================================
 
     while(tiempo < 32400)
     {
         // ============== Agrega clientes ==============
 
-        if(!llegada)
+        llegada[tiempo] = randomNumber(1, razonLlegada);
+
+        for(int n = 0; n < llegadas; n++)
         {
             Cliente *nuevo = newCliente();
 
@@ -94,8 +98,6 @@ void startSimulacion(Simulacion *sim)
                 nuevo->espero = TRUE;
                 addUltimo(&fila, nuevo);
             }
-
-            llegada = randomNumber(1, razonLlegada);
         }
 
         // =============== Actualizar cajeros y filas ======================
@@ -121,6 +123,8 @@ void startSimulacion(Simulacion *sim)
             }
         }
 
+        // ======== Revisar si la fila se vacio o lleno ==========
+
         if(fila.raiz && vacia)
             vacia = FALSE;
 
@@ -133,26 +137,42 @@ void startSimulacion(Simulacion *sim)
         // ============== Acualiza tiempo ==============
 
         recorreFn(&fila, esperar);
+        llegadas = contarLlegadaLaSecuela(llegada, 32400);
 
         for(int n = 0; n < CAJEROS; n++)
         {
-            //if(cajero[n].ocupado && cajero[n].tiempoA)
             if(cajero[n].tiempoA)
                 cajero[n].tiempoA--;
         }
 
-        if(llegada)
-            llegada--;
-
         tiempo++;
     }
+
+    // ============== Vaciar cajeros ==============
+
+    for(int n = 0; n < CAJEROS; n++)
+    {
+        if(cajero[n].ocupado)
+        {
+            Cliente *aux = desocuparCajero(&cajero[n]);
+            atendidos++;
+
+            if(aux->espero)
+                addRaiz(&formados, aux);
+
+            else
+                free(aux);
+        }
+    }
+
+    // ============== Estadisticas ==============
 
     rezagados = fila.size;
 
     while(fila.raiz)
         addRaiz(&formados, removeRaiz(&fila, FALSE));
 
-    addUltimo(&formados, getInt());
+    addUltimo(&formados, newInt(0));
     recorreFn(&formados, getSumatoria);
 
     sim->atendidos = atendidos;

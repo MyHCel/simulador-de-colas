@@ -91,6 +91,9 @@ void *removeRaiz(Lista *lista, bool delDato)
 
         return aux;
     }
+
+    else
+        return NULL;
 }
 
 // ===================== Último ========================
@@ -158,6 +161,9 @@ void *removeUltimo(Lista *lista, bool delDato)
             return aux;
         }
     }
+
+    else
+        return NULL;
 }
 
 // ===================== NUKEEE DA LIIIST!!!! ========================

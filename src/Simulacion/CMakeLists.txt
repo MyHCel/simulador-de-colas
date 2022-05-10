@@ -1,5 +1,5 @@
 # Archivos C
-add_library(Simulacion sim.c)
+add_library(Simulacion sim.c misc.c)
 target_link_libraries(Simulacion PUBLIC Clientes ListaLigada)
 
 # Algo que no sé bien que hace, pero que es necesario :v

@@ -30,7 +30,7 @@ void *desocuparCajero(Cajero *cajero)
 
     cajero->cliente = NULL;
     cajero->ocupado = FALSE;
-    //cajero->tiempoA = 0;
+    cajero->tiempoA = 0;
 
     return out;
 }
