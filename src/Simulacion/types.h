@@ -8,7 +8,6 @@ typedef struct
     int ncajeros;
     Cajero *cajero;
     int razonLlegada;
-
     int atendidos;
     int rezagados;
     int sumatoria;

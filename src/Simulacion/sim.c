@@ -59,7 +59,7 @@ void startSimulacion(Simulacion *sim)
 
     // ================================================
 
-    while(tiempo < 32400)
+    while(tiempo < 34200)
     {
         // ============== Agrega clientes ==============
 

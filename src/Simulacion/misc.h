@@ -6,9 +6,6 @@
 // Crear un int
 int *newInt(int val);
 
-void contarLlegada(Nodo *nodo);
-int contarLlegadaLaSecuela(int *arr, int len);
-
 // Obtener la sumatoria de todos los
 // clientes
 void getSumatoria(Nodo *nodo);
