@@ -12,25 +12,6 @@ int *newInt(int val)
     return out;
 }
 
-int contarLlegadaLaSecuela(int *arr, int len)
-{
-    int out = 0;
-
-    for(int n = 0; n < len; n++)
-    {
-        if(arr[n] > 0)
-            arr[n]--;
-
-        if(arr[n] == 0)
-        {
-            out++;
-            arr[n] = -1;
-        }
-    }
-
-    return out;
-}
-
 // Obtener la sumatoria de todos los
 // clientes
 void getSumatoria(Nodo *nodo)

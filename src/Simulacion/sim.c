@@ -37,9 +37,8 @@ Simulacion *newSimulacion()
 void startSimulacion(Simulacion *sim)
 {
     // Simulación
-    Lista fila, formados/*, llegada*/;
-    int llegada[32400];
-    int llegadas = 0;
+    Lista fila, formados;
+    int llegada = 0;
     int *sumatoria = NULL;
     int tiempo = 0;
     bool vacia = TRUE;
@@ -58,18 +57,13 @@ void startSimulacion(Simulacion *sim)
     listaInit(&fila);
     listaInit(&formados);
 
-    for(int n = 0; n < 32400; n++)
-        llegada[n] = -1;
-
     // ================================================
 
     while(tiempo < 32400)
     {
         // ============== Agrega clientes ==============
 
-        llegada[tiempo] = randomNumber(1, razonLlegada);
-
-        for(int n = 0; n < llegadas; n++)
+        if(!llegada)
         {
             Cliente *nuevo = newCliente();
 
@@ -98,6 +92,8 @@ void startSimulacion(Simulacion *sim)
                 nuevo->espero = TRUE;
                 addUltimo(&fila, nuevo);
             }
+
+            llegada = randomNumber(1, razonLlegada);
         }
 
         // =============== Actualizar cajeros y filas ======================
@@ -137,7 +133,6 @@ void startSimulacion(Simulacion *sim)
         // ============== Acualiza tiempo ==============
 
         recorreFn(&fila, esperar);
-        llegadas = contarLlegadaLaSecuela(llegada, 32400);
 
         for(int n = 0; n < CAJEROS; n++)
         {
@@ -145,6 +140,7 @@ void startSimulacion(Simulacion *sim)
                 cajero[n].tiempoA--;
         }
 
+        llegada--;
         tiempo++;
     }
 
